@@ -1,0 +1,14 @@
+[{
+	"modid": "fabricate",
+	"name": "Fabricate",
+	"description": "Customize everything.",
+	"version": "${mod_version}",
+	"mcversion": "${mcversion}",
+	"url": "https://github.com/Yuudaari/fabricate",
+	"updateUrl": "",
+	"authorList": ["Yuudaari"],
+	"credits": "",
+	"logoFile": "assets/fabricate/logo.png",
+	"screenshots": [],
+	"dependencies": []
+}]
