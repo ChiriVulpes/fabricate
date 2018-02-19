@@ -4,20 +4,20 @@ buildscript {
         maven { url = "http://files.minecraftforge.net/maven" }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
     }
 }
 
 plugins {
-    id 'org.ajoberstar.grgit' version '1.7.2'
+    id "org.ajoberstar.grgit" version "1.7.2"
 }
 
-apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: "net.minecraftforge.gradle.forge"
 
 
 final commitId
 
-if (hasProperty("grgit")) { // If there's a valid Git repository, get the latest commit ID
+if (hasProperty("grgit")) { // If there"s a valid Git repository, get the latest commit ID
     commitId = "${grgit.head().abbreviatedId}"
 } else { // Else fall back to NOGIT
     commitId = "NOGIT"
@@ -25,7 +25,6 @@ if (hasProperty("grgit")) { // If there's a valid Git repository, get the latest
 
 
 version = "${mc_version}-${mod_version}-${commitId}"
-def mod_version_string = version
 group = "${package_group}"
 archivesBaseName = "${mod_name}"
 
@@ -46,8 +45,8 @@ minecraft {
     mappings = "${mappings_version}"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
-    replace "@VERSION@", "$mod_version_string"
-    replaceIn "Main.java"
+    replace "@VERSION@", project.version
+    replaceIn "${mod_name}.java"
 }
 
 repositories {
@@ -66,22 +65,22 @@ processResources {
 
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
+        include "mcmod.info"
                 
         // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version, 'mod_version':project.mod_version
+        expand "version":project.version, "mcversion":project.minecraft.version, "mod_version":project.mod_version
     }
         
     // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+        exclude "mcmod.info"
     }
     
-    rename '(.+_at.cfg)', 'META-INF/$1'
+    rename "(.+_at.cfg)", "META-INF/\$1"
 }
 
 jar {
     manifest {
-        attributes 'FMLAT': 'fabricate_at.cfg'
+        attributes "FMLAT": "${mod_name}_at.cfg"
     }
 }
