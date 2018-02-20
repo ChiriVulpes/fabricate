@@ -2,18 +2,14 @@ package yuudaari.fabricate.scripts;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.StringReader;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import org.apache.commons.io.IOUtils;
 import yuudaari.fabricate.scripts.util.FileVisitor;
 import yuudaari.fabricate.scripts.util.TransformStream;
 import yuudaari.fabricate.util.Llog;
@@ -53,7 +49,7 @@ public class ScriptManager {
 		final TransformStream stream = new TransformStream.Factory(new FileInputStream(path.toFile()))
 			.transform("exports.__esModule = true;", "")
 			.transform("\"use strict\";", "")
-			.transform("= require(\"fabricate\");", "= Java.type(\"yuudaari.fabricate.api.Fabricate\");")
+			.transform("= require(\"fabricate\");", "= Java.type(\"yuudaari.fabricate.api.FabricateAPI\");")
 			.create();
 
 		/*

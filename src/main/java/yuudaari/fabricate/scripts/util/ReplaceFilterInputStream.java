@@ -172,6 +172,7 @@ public class ReplaceFilterInputStream extends FilterInputStream {
 	 * @throws IllegalArgumentException if given input stream to process or <code>'replacements'</code> argument
 	 *                                  is <code>null</code>
 	 */
+	@SuppressWarnings("unchecked")
 	public ReplaceFilterInputStream (InputStream in, Map<byte[], byte[]> replacements) throws IllegalArgumentException {
 		super(in);
 		if (replacements == null) {
@@ -327,6 +328,7 @@ public class ReplaceFilterInputStream extends FilterInputStream {
 	 * @param iterables arrays which max length value we are interested in
 	 * @return largest length between all given arrays
 	 */
+	@SuppressWarnings("unchecked")
 	private static int getMaxLength (Iterable<byte[]>... iterables) {
 		int result = -1;
 		for (Iterable<byte[]> iterable : iterables) {
