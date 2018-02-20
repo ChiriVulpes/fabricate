@@ -8,7 +8,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
 import yuudaari.fabricate.api.IRecipeQuery;
-import yuudaari.fabricate.util.Llog;
 
 public class RecipeQuery implements IRecipeQuery {
 
@@ -82,7 +81,7 @@ public class RecipeQuery implements IRecipeQuery {
 		}
 
 		for (final ResourceLocation recipeName : toRemove) {
-			Llog.info("removing " + recipeName);
+			// Llog.info("removing " + recipeName);
 			REGISTRY.remove(recipeName);
 		}
 	}

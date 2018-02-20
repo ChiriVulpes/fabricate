@@ -5,6 +5,34 @@
 [Roadmap](https://trello.com/b/8ha3jHEQ/fabricate)
 
 
+An alternative for CraftTweaker. Very WIP.
+
+CraftTweaker works with its own language, ZenScript. Fabricate uses Java's built-in API "Nashorn" to use Javascript instead. The API it provides via the Javascript aims to be succinct, expressive, and less obscure.
+
+Any file in the `/scripts/` mod directory (the same directory used by CraftTweaker) that ends in `.js` will be imported via Fabricate. 
+
+Here's an example script:
+
+```js
+var Fabricate = require("fabricate").Fabricate;
+var RegistryEvent = require("fabricate").RegistryEvent;
+
+Fabricate.on(RegistryEvent.Recipes, function (recipes) {
+	
+    recipes.addShaped("minecraft:diamond", [
+        ["minecraft:stick", "minecraft:stick", "minecraft:stick"],
+        ["minecraft:stick", "minecraft:dirt", "minecraft:stick"],
+        ["minecraft:stick", "minecraft:stick", "minecraft:stick"]
+	]);
+	
+	recipes.withOutput(Fabricate.stack("minecraft:diamond", 9)).removeAll();
+	
+    recipes.addShapeless("minecraft:grass", ["minecraft:dirt@0"]);
+});
+```
+
+In the future Fabricate will generate Typescript definitions in the scripts folder so scripts can be developed with typechecking.
+
 
 ## Table of Contents
 - [Download](#download-)

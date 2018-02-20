@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import yuudaari.fabricate.recipe.Ingredient;
-import yuudaari.fabricate.util.Llog;
 
 public class FabricateAPI {
 
@@ -43,7 +42,7 @@ public class FabricateAPI {
 		final String metaGroup = result.group(2);
 		final int meta = metaGroup == null || metaGroup.equals("*") ? 32767 : Integer.parseInt(metaGroup);
 
-		Llog.info(item.getRegistryName(), count, meta);
+		// Llog.info(item.getRegistryName(), count, meta);
 
 		return new ItemStack(item, count, meta);
 	}

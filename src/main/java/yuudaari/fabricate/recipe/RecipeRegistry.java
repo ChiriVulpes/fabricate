@@ -1,9 +1,7 @@
 package yuudaari.fabricate.recipe;
 
-import java.util.Arrays;
 import java.util.Stack;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -14,7 +12,6 @@ import net.minecraftforge.registries.IForgeRegistryModifiable;
 import yuudaari.fabricate.api.FabricateAPI;
 import yuudaari.fabricate.api.IRecipeQuery;
 import yuudaari.fabricate.api.IRecipeRegistry;
-import yuudaari.fabricate.util.Llog;
 
 public class RecipeRegistry implements IRecipeRegistry {
 
@@ -135,12 +132,12 @@ public class RecipeRegistry implements IRecipeRegistry {
 	 */
 	@Override
 	public IRecipeQuery withOutput (final Object result, final Integer count) {
-		Llog.info(result);
+		// Llog.info(result);
 		final Ingredient ingredient = getIngredient(result);
-		Llog.info(Arrays.asList(ingredient.getMatchingStacks())
+		/*Llog.info(Arrays.asList(ingredient.getMatchingStacks())
 			.stream()
 			.map(s -> s.toString())
-			.collect(Collectors.joining(", ")));
+			.collect(Collectors.joining(", ")));*/
 		final boolean shouldMatchCount = !(result instanceof String);
 		return filter(recipe -> ingredientMatchesStack(ingredient, recipe.getRecipeOutput(), shouldMatchCount, count));
 	}
@@ -158,7 +155,7 @@ public class RecipeRegistry implements IRecipeRegistry {
 			if (shouldMatchCount && matchCount != 32767 && matchCount != stack.getCount())
 				continue;
 
-			Llog.info(matchStack, stack);
+			// Llog.info(matchStack, stack);
 
 			return true;
 		}

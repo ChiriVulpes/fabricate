@@ -47,9 +47,9 @@ public class ScriptManager {
 
 	private Reader getScriptReader (final Path path) throws FileNotFoundException {
 		final TransformStream stream = new TransformStream.Factory(new FileInputStream(path.toFile()))
-			.transform("exports.__esModule = true;", "")
 			.transform("\"use strict\";", "")
-			.transform("= require(\"fabricate\");", "= Java.type(\"yuudaari.fabricate.api.FabricateAPI\");")
+			.transform("exports.__esModule = true;", "")
+			.transform("require(\"fabricate\")", "Java.type(\"yuudaari.fabricate.api.FabricateAPI\")")
 			.create();
 
 		/*
