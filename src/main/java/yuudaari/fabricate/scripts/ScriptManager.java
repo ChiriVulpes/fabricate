@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
+import java.util.Map.Entry;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
@@ -19,10 +21,12 @@ public class ScriptManager {
 	public static final String SCRIPTS_FOLDER = "scripts";
 
 	private final Path DIRECTORY;
+	private final Map<String, String> MODULES;
 	private ScriptEngine engine;
 
-	public ScriptManager (final String directory) {
+	public ScriptManager (final String directory, final Map<String, String> modules) {
 		DIRECTORY = Paths.get(directory, SCRIPTS_FOLDER);
+		MODULES = modules;
 	}
 
 	public void load () {
@@ -46,11 +50,15 @@ public class ScriptManager {
 	}
 
 	private Reader getScriptReader (final Path path) throws FileNotFoundException {
-		final TransformStream stream = new TransformStream.Factory(new FileInputStream(path.toFile()))
+		final TransformStream.Factory streamFactory = new TransformStream.Factory(new FileInputStream(path.toFile()))
 			.transform("\"use strict\";", "")
-			.transform("exports.__esModule = true;", "")
-			.transform("require(\"fabricate\")", "Java.type(\"yuudaari.fabricate.api.FabricateAPI\")")
-			.create();
+			.transform("exports.__esModule = true;", "");
+
+		for (final Entry<String, String> module : MODULES.entrySet()) {
+			streamFactory.transform("require(\"" + module.getKey() + "\")", "Java.type(\"" + module.getValue() + "\")");
+		}
+
+		final TransformStream stream = streamFactory.create();
 
 		/*
 		Llog.info(path.toFile().getAbsolutePath());

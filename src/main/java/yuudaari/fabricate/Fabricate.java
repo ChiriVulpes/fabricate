@@ -15,6 +15,7 @@ import net.minecraftforge.registries.IForgeRegistryModifiable;
 import yuudaari.fabricate.api.FabricateAPI;
 import yuudaari.fabricate.api.IApiWrapper;
 import yuudaari.fabricate.recipe.RecipeRegistry;
+import yuudaari.fabricate.scripts.DefinitionManager;
 import yuudaari.fabricate.scripts.ScriptManager;
 
 @Mod(modid = Fabricate.MODID, name = Fabricate.NAME, version = "@VERSION@", acceptedMinecraftVersions = "[1.12.2]")
@@ -35,7 +36,8 @@ public class Fabricate implements IApiWrapper {
 	// INSTANCE
 	//
 
-	public ScriptManager scripts;
+	public ScriptManager scriptManager;
+	public DefinitionManager definitionManager;
 	private final Map<Integer, List<Consumer<Object>>> eventHandlers = new HashMap<>();
 
 
@@ -45,11 +47,15 @@ public class Fabricate implements IApiWrapper {
 
 	@EventHandler
 	public void preInit (final FMLPreInitializationEvent event) {
+		final String directory = event.getModConfigurationDirectory().getParentFile().getAbsolutePath();
+
+		definitionManager = new DefinitionManager(directory);
+		definitionManager.load();
+
 		FabricateAPI.Fabricate = new FabricateAPI(this);
 
-		final String directory = event.getModConfigurationDirectory().getParentFile().getAbsolutePath();
-		scripts = new ScriptManager(directory);
-		scripts.load();
+		scriptManager = new ScriptManager(directory, definitionManager.getModuleMap());
+		scriptManager.load();
 	}
 
 
