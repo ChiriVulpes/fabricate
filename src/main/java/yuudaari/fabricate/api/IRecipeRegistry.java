@@ -19,6 +19,11 @@ public interface IRecipeRegistry {
 	 */
 	public IRecipe createShapeless (Object result, Object[] ingredients);
 
+	/**
+	 * Creates an empty recipe
+	 */
+	public IRecipe createEmpty ();
+
 
 	///////////////////////////////////
 	// ADDING

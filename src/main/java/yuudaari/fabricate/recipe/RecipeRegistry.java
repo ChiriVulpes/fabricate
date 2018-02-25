@@ -5,6 +5,7 @@ import java.util.function.Function;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -30,7 +31,13 @@ public class RecipeRegistry implements IRecipeRegistry {
 
 	private Ingredient getIngredient (Object input) {
 		if (input instanceof String) {
-			input = FabricateAPI.Fabricate.stack((String) input);
+			String inputString = (String) input;
+			if (inputString.charAt(0) == '$') {
+				// ore dictionary
+				return Ingredient.create(OreDictionary.getOres(inputString.substring(1)));
+			}
+
+			input = FabricateAPI.Fabricate.stack(inputString);
 		}
 		if (input instanceof ItemStack) {
 			return Ingredient.create(input);
@@ -85,6 +92,14 @@ public class RecipeRegistry implements IRecipeRegistry {
 		return recipe;
 	}
 
+	/**
+	 * Creates an empty recipe
+	 */
+	@Override
+	public IRecipe createEmpty () {
+		return new RecipeShapeless(ItemStack.EMPTY, ItemStack.EMPTY);
+	}
+
 
 	///////////////////////////////////
 	// ADDING
@@ -104,6 +119,7 @@ public class RecipeRegistry implements IRecipeRegistry {
 	@Override
 	public void addShaped (final Object result, final Object[][] inputs) {
 		add(createShaped(result, inputs));
+		// Llog.info("added shaped recipe for ", result);
 	}
 
 	/**
@@ -112,6 +128,7 @@ public class RecipeRegistry implements IRecipeRegistry {
 	@Override
 	public void addShapeless (final Object result, final Object[] inputs) {
 		add(createShapeless(result, inputs));
+		// Llog.info("added shapeless recipe for ", result);
 	}
 
 
@@ -144,6 +161,7 @@ public class RecipeRegistry implements IRecipeRegistry {
 
 	private boolean ingredientMatchesStack (final Ingredient ingredient, final ItemStack stack, final boolean shouldMatchCount, Integer matchCount) {
 		for (final ItemStack matchStack : ingredient.getMatchingStacks()) {
+
 			if (matchStack.getItem() != stack.getItem())
 				continue;
 
@@ -154,8 +172,6 @@ public class RecipeRegistry implements IRecipeRegistry {
 			if (matchCount == null) matchCount = matchStack.getCount();
 			if (shouldMatchCount && matchCount != 32767 && matchCount != stack.getCount())
 				continue;
-
-			// Llog.info(matchStack, stack);
 
 			return true;
 		}

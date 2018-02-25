@@ -1,6 +1,6 @@
 package yuudaari.fabricate.api;
 
-import java.util.function.Function;
+import java.util.function.Consumer;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,7 +21,7 @@ public class FabricateAPI {
 	public static FabricateAPI Fabricate = null;
 	public static RegistryEvents RegistryEvent = new RegistryEvents();
 
-	public void on (final int event, final Function<Object, Void> handler) {
+	public void on (final int event, final Consumer<Object> handler) {
 		wrapper.addEventHandler(event, handler);
 	}
 
@@ -50,6 +50,4 @@ public class FabricateAPI {
 	public Ingredient ingredient (final Object... inputs) {
 		return Ingredient.create(inputs);
 	}
-
-
 }

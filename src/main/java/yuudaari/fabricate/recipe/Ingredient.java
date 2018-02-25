@@ -9,7 +9,7 @@ public class Ingredient extends net.minecraft.item.crafting.Ingredient {
 
 	private boolean isSimple;
 
-	public Ingredient (List<ItemStack> stacks) {
+	private Ingredient (final List<ItemStack> stacks) {
 		super(stacks.toArray(new ItemStack[0]));
 	}
 
@@ -18,15 +18,16 @@ public class Ingredient extends net.minecraft.item.crafting.Ingredient {
 		return isSimple;
 	}
 
-	public static Ingredient create (Object... inputs) {
-		List<ItemStack> stacks = new ArrayList<>();
+	public static Ingredient create (final NonNullList<ItemStack> inputs) {
+		return create(inputs.toArray(new Object[0]));
+	}
+
+	public static Ingredient create (final Object... inputs) {
+		final List<ItemStack> stacks = new ArrayList<>();
 		boolean simple = true;
 
-		for (Object input : inputs) {
-			ItemStack stack = null;
-			if (input instanceof ItemStack) {
-				stack = (ItemStack) input;
-			}
+		for (final Object input : inputs) {
+			final ItemStack stack = input instanceof ItemStack ? (ItemStack) input : null;
 
 			if (stack.isEmpty())
 				continue;
@@ -35,18 +36,19 @@ public class Ingredient extends net.minecraft.item.crafting.Ingredient {
 				if (stack.getItem().isDamageable())
 					simple = false;
 
-				NonNullList<ItemStack> nnl = NonNullList.create();
+				final NonNullList<ItemStack> nnl = NonNullList.create();
 				stack.getItem().getSubItems(net.minecraft.creativetab.CreativeTabs.SEARCH, nnl);
-				for (ItemStack substack : nnl) {
+				for (final ItemStack substack : nnl) {
 					substack.setCount(stack.getCount());
 					stacks.add(substack);
 				}
-			}
 
-			stacks.add(stack);
+			} else {
+				stacks.add(stack);
+			}
 		}
 
-		Ingredient result = new Ingredient(stacks);
+		final Ingredient result = new Ingredient(stacks);
 		result.isSimple = simple;
 
 		return result;

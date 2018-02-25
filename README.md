@@ -19,15 +19,24 @@ var RegistryEvent = require("fabricate").RegistryEvent;
 
 Fabricate.on(RegistryEvent.Recipes, function (recipes) {
 	
-    recipes.addShaped("minecraft:diamond", [
-        ["minecraft:stick", "minecraft:stick", "minecraft:stick"],
-        ["minecraft:stick", "minecraft:dirt", "minecraft:stick"],
-        ["minecraft:stick", "minecraft:stick", "minecraft:stick"]
+	recipes.addShapeless("minecraft:grass", ["minecraft:dirt@0"]);
+
+	recipes.addShaped("minecraft:diamond", [
+		["minecraft:stick", "minecraft:stick", "minecraft:stick"],
+		["$ingotIron", "minecraft:dirt", "minecraft:stick"],
+		["minecraft:stick", "minecraft:stick", "minecraft:stick"]
 	]);
-	
-	recipes.withOutput(Fabricate.stack("minecraft:diamond", 9)).removeAll();
-	
-    recipes.addShapeless("minecraft:grass", ["minecraft:dirt@0"]);
+
+	recipes.withOutput(Fabricate.stack("minecraft:diamond", 9))
+		.setImmediate()
+		.replaceAll(recipe => recipes.createEmpty());
+
+	recipes.addShapeless(Fabricate.stack("minecraft:diamond", 9), ["minecraft:coal_block"]);
+
+	recipes.withOutput(Fabricate.stack("minecraft:iron_ingot", 9))
+		.replaceAll(recipe => recipes.createEmpty());
+
+	recipes.addShapeless(Fabricate.stack("minecraft:iron_ingot", 9), ["minecraft:stone"]);
 });
 ```
 
