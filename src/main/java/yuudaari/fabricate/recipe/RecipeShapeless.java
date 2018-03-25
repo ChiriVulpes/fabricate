@@ -8,12 +8,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
-import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-public class RecipeShapeless extends Recipe {
-
-	protected ItemStack output = ItemStack.EMPTY;
-	protected NonNullList<Ingredient> input = NonNullList.create();
+public class RecipeShapeless extends ShapelessOreRecipe {
 
 	public RecipeShapeless (final Block result, final Object... recipe) {
 		this(new ItemStack(result), recipe);
@@ -24,43 +21,18 @@ public class RecipeShapeless extends Recipe {
 	}
 
 	public RecipeShapeless (final NonNullList<Ingredient> input, final ItemStack result) {
-		output = result.copy();
-		this.input = input;
+		super(null, input, result);
 	}
 
 	public RecipeShapeless (final ItemStack result, final Object... recipe) {
-		output = result.copy();
-		for (final Object in : recipe) {
-			final Ingredient ing = CraftingHelper.getIngredient(in);
-			if (ing != null) {
-				input.add(ing);
-			} else {
-				String ret = "Invalid shapeless ore recipe: ";
-				for (final Object tmp : recipe) {
-					ret += tmp + ", ";
-				}
-				ret += output;
-				throw new RuntimeException(ret);
-			}
-		}
+		super(null, result, recipe);
 	}
 
 	@Override
-	public ItemStack getRecipeOutput () {
-		return output;
+	public boolean canFit (final int width, final int height) {
+		return width * height >= input.size();
 	}
 
-	/**
-	 * Returns an Item that is the result of this recipe
-	 */
-	@Override
-	public ItemStack getCraftingResult (final InventoryCrafting var1) {
-		return output.copy();
-	}
-
-	/**
-	 * Used to check if a recipe matches current crafting inventory
-	 */
 	@Override
 	public boolean matches (final InventoryCrafting var1, final World world) {
 		final NonNullList<Ingredient> required = NonNullList.create();
@@ -91,17 +63,12 @@ public class RecipeShapeless extends Recipe {
 	}
 
 	@Override
-	public NonNullList<Ingredient> getIngredients () {
-		return this.input;
+	public ItemStack getCraftingResult (final InventoryCrafting var1) {
+		return output.copy();
 	}
 
 	@Override
-	public String getGroup () {
-		return "";
-	}
-
-	@Override
-	public boolean canFit (final int width, final int height) {
-		return width * height >= this.input.size();
+	public NonNullList<ItemStack> getRemainingItems (InventoryCrafting inv) {
+		return super.getRemainingItems(inv);
 	}
 }

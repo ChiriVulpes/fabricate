@@ -129,7 +129,7 @@ public class RecipeQuery implements IRecipeQuery {
 	 */
 	private void execute (final Function<IRecipe, Boolean> handler) {
 		if (!immediate) {
-			Fabricate.on(RegistryEvent.RegisteredRecipe, recipe -> {
+			Fabricate.on(RegistryEvent.get("RegisteredRecipe"), recipe -> {
 				if (finished) return;
 
 				for (final Function<IRecipe, Boolean> predicate : PREDICATES) {

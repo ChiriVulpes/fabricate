@@ -10,10 +10,12 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
 import yuudaari.fabricate.api.FabricateAPI;
 import yuudaari.fabricate.api.IApiWrapper;
+import yuudaari.fabricate.api.RegistryEvents;
 import yuudaari.fabricate.recipe.RecipeRegistry;
 import yuudaari.fabricate.scripts.DefinitionManager;
 import yuudaari.fabricate.scripts.ScriptManager;
@@ -38,7 +40,7 @@ public class Fabricate implements IApiWrapper {
 
 	public ScriptManager scriptManager;
 	public DefinitionManager definitionManager;
-	private final Map<Integer, List<Consumer<Object>>> eventHandlers = new HashMap<>();
+	private final Map<Object, List<Consumer<Object>>> eventHandlers = new HashMap<>();
 
 
 	//////////////////////////////////////
@@ -64,14 +66,18 @@ public class Fabricate implements IApiWrapper {
 	//
 
 	@Override
-	public void addEventHandler (final int event, final Consumer<Object> handler) {
+	public void addEventHandler (final Object event, final Consumer<Object> handler) {
 		List<Consumer<Object>> handlerList = eventHandlers.get(event);
 		if (handlerList == null) eventHandlers.put(event, handlerList = new ArrayList<>());
 
 		handlerList.add(handler);
 	}
 
-	public void triggerEvent (final int event, final Object argument) {
+	public void triggerEvent (final RegistryEvents.RegistryEvent event, final Object argument) {
+		triggerEvent(FabricateAPI.RegistryEvent.get(event), argument);
+	}
+
+	public void triggerEvent (final Object event, final Object argument) {
 		final List<Consumer<Object>> handlerList = eventHandlers.get(event);
 		if (handlerList == null) return;
 
@@ -85,13 +91,13 @@ public class Fabricate implements IApiWrapper {
 	// REGISTRATION
 	//
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void registerRecipes (final RegistryEvent.Register<IRecipe> event) {
-		INSTANCE.triggerEvent(FabricateAPI.RegistryEvent.Recipes, new RecipeRegistry(event.getRegistry()));
+		INSTANCE.triggerEvent(RegistryEvents.RegistryEvent.Recipes, new RecipeRegistry(event.getRegistry()));
 
 		final IForgeRegistryModifiable<IRecipe> REGISTRY = (IForgeRegistryModifiable<IRecipe>) event.getRegistry();
 		for (final IRecipe recipe : REGISTRY.getValues()) {
-			INSTANCE.triggerEvent(FabricateAPI.RegistryEvent.RegisteredRecipe, recipe);
+			INSTANCE.triggerEvent(RegistryEvents.RegistryEvent.RegisteredRecipe, recipe);
 		}
 	}
 }

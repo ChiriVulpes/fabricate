@@ -9,14 +9,9 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.CraftingHelper.ShapedPrimer;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
-public class RecipeShaped extends Recipe {
-
-	protected ItemStack output = ItemStack.EMPTY;
-	protected NonNullList<Ingredient> input = null;
-	protected int width = 0;
-	protected int height = 0;
-	protected boolean mirrored = true;
+public class RecipeShaped extends ShapedOreRecipe {
 
 	public RecipeShaped (final Block result, final Object... recipe) {
 		this(new ItemStack(result), recipe);
@@ -31,21 +26,12 @@ public class RecipeShaped extends Recipe {
 	}
 
 	public RecipeShaped (final ItemStack result, final ShapedPrimer primer) {
-		output = result.copy();
-		this.width = primer.width;
-		this.height = primer.height;
-		this.input = primer.input;
-		this.mirrored = primer.mirrored;
+		super(null, result, primer);
 	}
 
 	@Override
-	public ItemStack getCraftingResult (final InventoryCrafting var1) {
-		return output.copy();
-	}
-
-	@Override
-	public ItemStack getRecipeOutput () {
-		return output;
+	public boolean canFit (final int width, final int height) {
+		return width >= this.width && height >= this.height;
 	}
 
 	@Override
@@ -65,6 +51,9 @@ public class RecipeShaped extends Recipe {
 		return false;
 	}
 
+	/**
+	 * Checks if the recipe matches at a specific position
+	 */
 	protected boolean checkMatch (final InventoryCrafting inv, final int startX, final int startY, final boolean mirror) {
 		for (int x = 0; x < inv.getWidth(); x++) {
 			for (int y = 0; y < inv.getHeight(); y++) {
@@ -89,31 +78,13 @@ public class RecipeShaped extends Recipe {
 		return true;
 	}
 
-	public RecipeShaped setMirrored (final boolean mirror) {
-		mirrored = mirror;
-		return this;
+	@Override
+	public ItemStack getCraftingResult (final InventoryCrafting var1) {
+		return output.copy();
 	}
 
 	@Override
-	public NonNullList<Ingredient> getIngredients () {
-		return this.input;
-	}
-
-	public int getWidth () {
-		return width;
-	}
-
-	public int getHeight () {
-		return height;
-	}
-
-	@Override
-	public String getGroup () {
-		return "";
-	}
-
-	@Override
-	public boolean canFit (final int width, final int height) {
-		return width >= this.width && height >= this.height;
+	public NonNullList<ItemStack> getRemainingItems (InventoryCrafting inv) {
+		return super.getRemainingItems(inv);
 	}
 }

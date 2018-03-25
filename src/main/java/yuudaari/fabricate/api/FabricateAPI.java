@@ -21,7 +21,8 @@ public class FabricateAPI {
 	public static FabricateAPI Fabricate = null;
 	public static RegistryEvents RegistryEvent = new RegistryEvents();
 
-	public void on (final int event, final Consumer<Object> handler) {
+
+	public void on (final Object event, final Consumer<Object> handler) {
 		wrapper.addEventHandler(event, handler);
 	}
 
