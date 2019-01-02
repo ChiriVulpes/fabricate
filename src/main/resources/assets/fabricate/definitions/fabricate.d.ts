@@ -1,7 +1,7 @@
 declare module "fabricate" {
-	export enum RegistryEvent {
-		Recipes = 0,
-		RegisteredRecipe = 1,
+	export const enum RegistryEvent {
+		Recipes = "Recipes",
+		RegisteredRecipe = "RegisteredRecipe",
 	}
 
 	export module Fabricate {

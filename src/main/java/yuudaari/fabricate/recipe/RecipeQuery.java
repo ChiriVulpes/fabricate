@@ -9,8 +9,8 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
 import yuudaari.fabricate.api.IRecipeQuery;
+import yuudaari.fabricate.api.RegistryEvent;
 import static yuudaari.fabricate.api.FabricateAPI.Fabricate;
-import static yuudaari.fabricate.api.FabricateAPI.RegistryEvent;
 
 public class RecipeQuery implements IRecipeQuery {
 
@@ -129,7 +129,7 @@ public class RecipeQuery implements IRecipeQuery {
 	 */
 	private void execute (final Function<IRecipe, Boolean> handler) {
 		if (!immediate) {
-			Fabricate.on(RegistryEvent.get("RegisteredRecipe"), recipe -> {
+			Fabricate.on(RegistryEvent.RegisteredRecipe.name(), recipe -> {
 				if (finished) return;
 
 				for (final Function<IRecipe, Boolean> predicate : PREDICATES) {
@@ -143,7 +143,7 @@ public class RecipeQuery implements IRecipeQuery {
 
 		// immediate
 		TOP:
-		for (final Entry<ResourceLocation, IRecipe> recipe : REGISTRY.getEntries()) {
+		for (final Entry<ResourceLocation, IRecipe> recipe : new ArrayList<>(REGISTRY.getEntries())) {
 			for (final Function<IRecipe, Boolean> predicate : PREDICATES) {
 				if (!predicate.apply(recipe.getValue())) continue TOP;
 			}
