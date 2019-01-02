@@ -8,6 +8,8 @@
 		}
 	],
 	"settings": {
-		"java.configuration.updateBuildConfiguration": "automatic"
+		"java.configuration.updateBuildConfiguration": "automatic",
+		"java.format.settings.url": "../.settings/format.xml",
+		"java.format.settings.profile": "GoogleStyle"
 	}
 }

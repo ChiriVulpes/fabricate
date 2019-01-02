@@ -24,6 +24,17 @@
 			"group": "build",
 			"command": "\"./gradlew\" build",
 			"problemMatcher": []
+		},
+		{
+			"label": "Compile Test Scripts",
+			"type": "shell",
+			"options": {
+				"cwd": "./run/scripts"
+			},
+			"isBackground": true,
+			"group": "build",
+			"command": "tsc --watch --pretty",
+			"problemMatcher": []
 		}
 	]
 }

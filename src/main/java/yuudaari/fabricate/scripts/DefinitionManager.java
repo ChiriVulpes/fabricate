@@ -28,15 +28,44 @@ public class DefinitionManager {
 
 	private final Path DIRECTORY;
 
+	public static class Module {
+
+		private boolean simple = true;
+		private Map<String, String> exports;
+		private String root;
+
+		public Module (final String path) {
+			this.root = path;
+		}
+
+		public Module (final String root, final Map<String, String> exports) {
+			this.root = root;
+			this.exports = exports;
+			simple = false;
+		}
+
+		public boolean isSimple () {
+			return simple;
+		}
+
+		public String getPath () {
+			return root;
+		}
+
+		public Map<String, String> getExports () {
+			return exports;
+		}
+	}
+
 	public DefinitionManager (final String directory) {
 		DIRECTORY = Paths.get(directory, ScriptManager.SCRIPTS_FOLDER, "definitions");
 	}
 
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 	private ModContainer modContainer;
-	private final Map<String, String> MODULES = new HashMap<>();
+	private final Map<String, Module> MODULES = new HashMap<>();
 
-	public Map<String, String> getModuleMap () {
+	public Map<String, Module> getModuleMap () {
 		return MODULES;
 	}
 
@@ -85,13 +114,7 @@ public class DefinitionManager {
 				final JsonObject json = JsonUtils.fromJson(GSON, reader, JsonObject.class);
 
 				for (final Entry<String, JsonElement> module : json.entrySet()) {
-					final JsonElement modulePath = module.getValue();
-					if (!modulePath.isJsonPrimitive() || !modulePath.getAsJsonPrimitive().isString()) {
-						Llog.warn("Module must be mapped to a string path");
-						continue;
-					}
-
-					MODULES.put(module.getKey(), modulePath.getAsString());
+					deserializeModule(module);
 				}
 
 			} catch (final IOException e) {
@@ -102,6 +125,48 @@ public class DefinitionManager {
 			}
 		}
 		return true;
+	}
+
+	private void deserializeModule (final Entry<String, JsonElement> module) {
+		final JsonElement moduleJson = module.getValue();
+		Module moduleInstance;
+
+		if (moduleJson.isJsonPrimitive() && moduleJson.getAsJsonPrimitive().isString()) {
+			moduleInstance = new Module(moduleJson.getAsString());
+
+		} else if (moduleJson.isJsonObject()) {
+			final JsonObject moduleObject = moduleJson.getAsJsonObject();
+
+			final JsonElement root = moduleObject.get("root");
+			if (root != null && (!root.isJsonPrimitive() || !root.getAsJsonPrimitive().isString())) {
+				Llog.warn("Invalid 'root' of module definition for '", module.getKey(), "'");
+				return;
+			}
+
+			final JsonElement exportsJson = moduleObject.get("exports");
+			if (exportsJson == null || !exportsJson.isJsonObject()) {
+				Llog.warn("Invalid 'exports' of module definition for '", module.getKey(), "'");
+				return;
+			}
+
+			final Map<String, String> exports = new HashMap<>();
+			for (final Map.Entry<String, JsonElement> entry : exportsJson.getAsJsonObject().entrySet()) {
+				if (!entry.getValue().isJsonPrimitive() || !entry.getValue().getAsJsonPrimitive().isString()) {
+					Llog.warn("Invalid 'exports' of module definition for '", module.getKey(), "'");
+					return;
+				}
+
+				exports.put(entry.getKey(), entry.getValue().getAsString());
+			}
+
+			moduleInstance = new Module(root == null ? "" : root.getAsString(), exports);
+
+		} else {
+			Llog.warn("Invalid module definition '", module.getKey(), "'");
+			return;
+		}
+
+		MODULES.put(module.getKey(), moduleInstance);
 	}
 
 	/**
