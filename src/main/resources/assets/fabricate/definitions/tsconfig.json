@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"outDir": "./out",
+		"noLib": true,
+		"baseUrl": "./"
+	},
+	"include": [
+		"**/*.ts",
+		"**/*.d.ts"
+	],
+	"exclude": []
+}

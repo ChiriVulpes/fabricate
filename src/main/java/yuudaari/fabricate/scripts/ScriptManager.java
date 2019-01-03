@@ -58,6 +58,7 @@ public class ScriptManager {
 		for (final Entry<String, Module> module : MODULES.entrySet()) {
 			final String moduleReplacement = getModuleReplacement(module.getValue());
 			streamFactory.transform("require(\"" + module.getKey() + "\")", moduleReplacement);
+			streamFactory.transform("\"" + module.getKey() + "[]\")", "\"" + module.getValue() + "[]\")");
 		}
 
 		final TransformStream stream = streamFactory.create();

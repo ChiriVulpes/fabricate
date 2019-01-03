@@ -1,3 +1,59 @@
 {
-	"fabricate": "yuudaari.fabricate.api.FabricateAPI"
+	"fabricate": "yuudaari.fabricate.api.FabricateAPI",
+	"collections": {
+		"root": "java.util",
+		"exports": {
+			"List": "List",
+			"Map": "Map",
+			"Set": "Set"
+		}
+	},
+	"random": "java.util.Random",
+	"utility": {
+		"root": "net.minecraft.util",
+		"exports": {
+			"ResourceLocation": "ResourceLocation"
+		}		
+	},
+	"math": {
+		"root": "net.minecraft.util",
+		"exports": {
+			"BlockPos": "math.BlockPos",
+			"Vec2f": "math.Vec2f",
+			"Vec3i": "math.Vec3i",
+			"Vec3d": "math.Ved3d",
+			"Facing": "EnumFacing",
+			"Axis": "EnumFacing$Axis",
+			"AxisDirection": "EnumFacing$AxisDirection",
+			"Plane": "EnumFacing$Plane",
+			"Rotation": "Rotation"
+		}
+	},
+	"artisan-worktables": {
+		"root": "com.codetaylor.mc.artisanworktables.api",
+		"exports": {
+			"ArtisanAPI": "ArtisanAPI",
+			"RecipeBuilder": "recipe.RecipeBuilder"
+		}
+	},
+	"artisan-worktables/reference": {
+		"root": "com.codetaylor.mc.artisanworktables.api.internal.reference",
+		"exports": {
+			"Type": "EnumType",
+			"Tier": "EnumTier",
+			"GameStageRequire": "EnumGameStageRequire"
+		}
+	},
+	"artisan-worktables/recipe": {
+		"root": "com.codetaylor.mc.artisanworktables.api",
+		"exports": {
+			"RecipeRegistry": "internal.recipe.RecipeRegistry",
+			"ToolEntry": "internal.recipe.ToolEntry",
+			"ToolIngredientEntry": "internal.recipe.ToolIngredientEntry",
+			"OutputWeightPair": "internal.recipe.OutputWeightPair",
+			"IRecipeMatrixMatcher": "internal.recipe.IRecipeMatrixMatcher",
+			"ISecondaryIngredientMatcher": "internal.recipe.ISecondaryIngredientMatcher",
+			"IRecipeFactory": "recipe.IRecipeFactory"
+		}
+	}
 }

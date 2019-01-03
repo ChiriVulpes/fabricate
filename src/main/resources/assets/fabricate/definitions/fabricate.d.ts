@@ -29,7 +29,7 @@ declare module "fabricate" {
 	}
 
 	export type IIngredientSimple = string | IStack;
-	export type IIngredient = IIngredientSimple | IIngredientSimple[] | null;
+	export type IIngredient = IIngredientSimple | JArray<IIngredientSimple> | null;
 
 
 	export type IResult = string | IStack;
@@ -101,12 +101,12 @@ declare module "fabricate" {
 		/**
 		 * Create a shaped recipe
 		 */
-		createShaped (result: IResult, recipe: IIngredient[][]): IRecipe;
+		createShaped (result: IResult, recipe: JArray<JArray<IIngredient>>): IRecipe;
 
 		/**
 		 * Create a shapeless recipe
 		 */
-		createShapeless (result: IResult, recipe: IIngredient[]): IRecipe;
+		createShapeless (result: IResult, recipe: JArray<IIngredient>): IRecipe;
 
 		/**
 		 * Creates an empty recipe
@@ -126,12 +126,12 @@ declare module "fabricate" {
 		/**
 		 * Add a shaped recipe
 		 */
-		addShaped (result: IResult, recipe: IIngredient[][]): void;
+		addShaped (result: IResult, recipe: JArray<JArray<IIngredient>>): void;
 
 		/**
 		 * Add a shapeless recipe
 		 */
-		addShapeless (result: IResult, recipe: IIngredient[]): void;
+		addShapeless (result: IResult, recipe: JArray<IIngredient>): void;
 
 
 		///////////////////////////////////
