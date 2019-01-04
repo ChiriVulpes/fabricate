@@ -14,7 +14,7 @@ declare module "artisan-worktables/recipe" {
 			playerExperience: number,
 			playerLevels: number,
 			isPlayerCreative: boolean,
-			tools: JArray<ItemStack>,
+			tools: ItemStack[],
 			craftingMatrix: ICraftingMatrixStackHandler,
 			fluidStack: FluidStack | null,
 			secondaryIngredientMatcher: ISecondaryIngredientMatcher,

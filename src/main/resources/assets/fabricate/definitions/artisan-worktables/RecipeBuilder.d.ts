@@ -5,9 +5,9 @@ declare module "artisan-worktables" {
 
 	export interface IRecipeBuilder {
 		setName (name: string): this;
-		setIngredients (ingredients: JArray<JArray<IArtisanIngredient>> | JArray<IArtisanIngredient>): this;
+		setIngredients (ingredients: IArtisanIngredient[][] | IArtisanIngredient[]): this;
 		setFluidIngredient (fluid: FluidStack): this;
-		setSecondaryIngredients (ingredients: JArray<IArtisanIngredient>): this;
+		setSecondaryIngredients (ingredients: IArtisanIngredient[]): this;
 		setConsumeSecondaryIngredients (consume: boolean): this;
 		setMirrored (): this;
 		addTool (tool: IArtisanIngredient, damage: number): this;
@@ -30,7 +30,7 @@ declare module "artisan-worktables" {
 
 		export module Copy {
 			export function byName (recipeName: string): IRecipeBuilderCopyStrategy;
-			export function byOutput (outputs: JArray<IArtisanIngredient>): IRecipeBuilderCopyStrategy;
+			export function byOutput (outputs: IArtisanIngredient[]): IRecipeBuilderCopyStrategy;
 			// we can't use `byRecipe` because it's specifically for crafttweaker
 			// export function byRecipe (recipe: ICraftingRecipe): IRecipeBuilderCopyStrategy;
 		}

@@ -33,7 +33,7 @@ declare module "artisan-worktables/recipe" {
 			playerExperienceTotal: int,
 			playerLevels: int,
 			isPlayerCreative: boolean,
-			tools: JArray<ItemStack>,
+			tools: ItemStack[],
 			craftingMatrix: ICraftingMatrixStackHandler,
 			fluidStack: FluidStack | null,
 			secondaryIngredientMatcher: ISecondaryIngredientMatcher,
@@ -141,7 +141,7 @@ declare module "artisan-worktables/recipe" {
 		 * @param toolIndex the tool slot index [0,2]
 		 * @return the array of acceptable tools for the given tool slot index
 		 */
-		getTools (toolIndex: int): JArray<IArtisanItemStack>;
+		getTools (toolIndex: int): IArtisanItemStack[];
 
 		/**
 		 * @param toolIndex the tool slot index [0,2]

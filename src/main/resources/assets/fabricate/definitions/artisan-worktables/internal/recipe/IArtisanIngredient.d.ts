@@ -8,7 +8,7 @@ declare module "artisan-worktables/recipe" {
 		matches (stack: IArtisanItemStack): boolean;
 		matchesIgnoreAmount (stack: ItemStack): boolean;
 		matchesIgnoreAmount (stack: ItemStack): boolean;
-		getMatchingStacks (): JArray<IArtisanItemStack>;
+		getMatchingStacks (): IArtisanItemStack[];
 		toIngredient (): Ingredient;
 	}
 }

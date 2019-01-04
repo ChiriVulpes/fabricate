@@ -5,7 +5,20 @@ declare module "recipe" {
 	}
 
 	export interface ItemStack {
-
+		isEmpty (): boolean;
+		splitStack (amount: int): ItemStack;
+		getItem (): Item;
+		getMaxStackSize (): int;
+		isStackable (): boolean;
+		isItemStackDamageable (): boolean;
+		getHasSubtypes (): boolean;
+		isItemDamaged (): boolean;
+		getItemDamage (): int;
+		getMetadata (): int;
+		setItemDamage (meta: int): void;
+		getMaxDamage (): int;
+		copy (): ItemStack;
+		getMaxItemUseDuration (): int;
 	}
 
 	export interface Ingredient {
@@ -39,7 +52,7 @@ declare module "recipe" {
 	}
 
 	export interface IFluidHandler {
-		getTankProperties (): JArray<IFluidTankProperties>;
+		getTankProperties (): IFluidTankProperties[];
 		fill (resource: FluidStack, doFill: boolean): number;
 		drain (resource: FluidStack, doDrain: boolean): FluidStack | null;
 		drain (maxDrain: number, doDrain: boolean): FluidStack | null;

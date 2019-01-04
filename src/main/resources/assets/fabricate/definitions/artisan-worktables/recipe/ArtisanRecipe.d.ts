@@ -13,7 +13,7 @@ declare module "artisan-worktables/recipe" {
 			name: string | null,
 			requirementMap: Map<ResourceLocation, IRequirement>,
 			output: List<OutputWeightPair>,
-			tools: JArray<ToolEntry>,
+			tools: ToolEntry[],
 			ingredients: List<IArtisanIngredient>,
 			secondaryIngredients: List<IArtisanIngredient>,
 			consumeSecondaryIngredients: boolean,
@@ -21,7 +21,7 @@ declare module "artisan-worktables/recipe" {
 			experienceRequired: int,
 			levelRequired: int,
 			consumeExperience: boolean,
-			extraOutputs: JArray<ExtraOutputChancePair>,
+			extraOutputs: ExtraOutputChancePair[],
 			recipeMatrixMatcher: IRecipeMatrixMatcher,
 			mirrored: boolean,
 			width: int,
@@ -43,7 +43,7 @@ declare module "artisan-worktables/recipe" {
 		getQuaternaryOutputChance (): float;
 		getSecondaryIngredients (): List<IArtisanIngredient>;
 		consumeSecondaryIngredients (): boolean;
-		getTools (toolIndex: int): JArray<IArtisanItemStack>;
+		getTools (toolIndex: int): IArtisanItemStack[];
 		getIngredientList (): List<IArtisanIngredient>;
 		getFluidIngredient (): FluidStack | null;
 		getOutputWeightPairList (): List<OutputWeightPair>;
@@ -58,7 +58,7 @@ declare module "artisan-worktables/recipe" {
 		getRequirement (resourceLocation: ResourceLocation): IRequirement;
 		getRequirements (): Map<ResourceLocation, IRequirement>;
 		isHidden (): boolean;
-		isValidTool (tool: ItemStack, toolIndex: ItemStack): boolean;
+		isValidTool (tool: ItemStack, toolIndex: int): boolean;
 		hasSufficientToolDurability (tool: ItemStack, toolIndex: int): boolean;
 		selectOutput (context: ICraftingContext, random: Random): IArtisanItemStack;
 		matches (
@@ -66,7 +66,7 @@ declare module "artisan-worktables/recipe" {
 			playerExperienceTotal: int,
 			playerLevels: int,
 			isPlayerCreative: boolean,
-			tools: JArray<ItemStack>,
+			tools: ItemStack[],
 			craftingMatrix: ICraftingMatrixStackHandler,
 			fluidStack: FluidStack,
 			secondaryIngredientMatcher: ISecondaryIngredientMatcher,

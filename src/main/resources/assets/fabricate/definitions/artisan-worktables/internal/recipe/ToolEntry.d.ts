@@ -7,8 +7,8 @@ declare module "artisan-worktables/recipe" {
 
 	export class ToolEntry {
 		constructor(entry: ToolIngredientEntry);
-		constructor(tool: JArray<IArtisanItemStack>, damage: int);
-		getTool (): JArray<IArtisanItemStack>;
+		constructor(tool: IArtisanItemStack[], damage: int);
+		getTool (): IArtisanItemStack[];
 		getDamage (): int;
 	}
 }

@@ -5,8 +5,8 @@ declare module "collections" {
 		isEmpty (): boolean;
 		contains (object: any): boolean;
 		iterator (): Iterator<T>;
-		toArray (): JArray<any>;
-		toArray (arr: JArray<T>): JArray<T>;
+		toArray (): any[];
+		toArray (arr: T[]): T[];
 		add (value: T): boolean;
 		remove (value: any): boolean;
 		containsAll (collection: Collection<any>): boolean;

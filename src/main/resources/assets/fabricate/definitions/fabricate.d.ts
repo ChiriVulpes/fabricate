@@ -1,4 +1,6 @@
 declare module "fabricate" {
+	import { ItemStack } from "recipe";
+
 	export const enum RegistryEvent {
 		Recipes = "Recipes",
 		RegisteredRecipe = "RegisteredRecipe",
@@ -17,22 +19,18 @@ declare module "fabricate" {
 		/**
 		 * Gets a stack from a string. Used internally when passing strings to Fabricate methods.
 		 */
-		export function stack (stack: string): IStack;
+		export function stack (stack: string): ItemStack;
 		/**
 		 * Gets a stack from a string. Used internally when passing strings to Fabricate methods.
 		 */
-		export function stack (stack: string, count: number): IStack;
+		export function stack (stack: string, count: number): ItemStack;
 	}
 
-	export interface IStack {
-
-	}
-
-	export type IIngredientSimple = string | IStack;
-	export type IIngredient = IIngredientSimple | JArray<IIngredientSimple> | null;
+	export type IIngredientSimple = string | ItemStack;
+	export type IIngredient = IIngredientSimple | IIngredientSimple[] | null;
 
 
-	export type IResult = string | IStack;
+	export type IResult = string | ItemStack;
 
 	export interface IResourceLocation {
 		getResourceDomain (): string;
@@ -101,12 +99,12 @@ declare module "fabricate" {
 		/**
 		 * Create a shaped recipe
 		 */
-		createShaped (result: IResult, recipe: JArray<JArray<IIngredient>>): IRecipe;
+		createShaped (result: IResult, recipe: IIngredient[][]): IRecipe;
 
 		/**
 		 * Create a shapeless recipe
 		 */
-		createShapeless (result: IResult, recipe: JArray<IIngredient>): IRecipe;
+		createShapeless (result: IResult, recipe: IIngredient[]): IRecipe;
 
 		/**
 		 * Creates an empty recipe
@@ -126,12 +124,12 @@ declare module "fabricate" {
 		/**
 		 * Add a shaped recipe
 		 */
-		addShaped (result: IResult, recipe: JArray<JArray<IIngredient>>): void;
+		addShaped (result: IResult, recipe: IIngredient[][]): void;
 
 		/**
 		 * Add a shapeless recipe
 		 */
-		addShapeless (result: IResult, recipe: JArray<IIngredient>): void;
+		addShapeless (result: IResult, recipe: IIngredient[]): void;
 
 
 		///////////////////////////////////

@@ -20,7 +20,7 @@ declare module "artisan-worktables/reference" {
 		export const DESIGNER: Type;
 		export const TANNER: Type;
 		export const POTTER: Type;
-		export const NAMES: JArray<string>;
+		export const NAMES: string[];
 		export function fromName (name: string): Type;
 		export function fromMeta (meta: number): Type;
 	}

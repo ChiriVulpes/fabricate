@@ -1,12 +1,13 @@
 declare interface JArray<T> {
 	length: number;
+	[key: number]: T;
 }
 
 declare module Java {
 	export function type (name: string): any;
-	export function to (data: number[], to: "int[]"): JArray<int>;
-	export function to (data: number[], to: "float[]"): JArray<float>;
-	export function to<T> (data: T[], to: string): JArray<T>;
+	export function to (data: number[], to: "int[]"): int[];
+	export function to (data: number[], to: "float[]"): float[];
+	export function to<T> (data: T[], to: string): T[];
 }
 
 declare interface Enum {

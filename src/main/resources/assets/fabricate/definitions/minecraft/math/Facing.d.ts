@@ -63,7 +63,7 @@ declare module "math" {
 	}
 
 	export interface Plane extends Enum {
-		facings (): JArray<Facing>;
+		facings (): Facing[];
 		iterator (): Iterator<Facing>
 		random (rand: Random): Facing;
 	}
