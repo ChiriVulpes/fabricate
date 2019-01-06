@@ -1,5 +1,5 @@
 declare module "artisan-worktables/recipe" {
-	import { Item, ItemStack } from "recipe";
+	import { Item, IItemStack } from "recipe";
 
 	export interface IArtisanItemStack {
 		getAmount (): int;
@@ -12,7 +12,7 @@ declare module "artisan-worktables/recipe" {
 		 *
 		 * @return a copy of the internal item stack object
 		 */
-		toItemStack (): ItemStack;
+		toItemStack (): IItemStack;
 		copy (): IArtisanItemStack;
 	}
 }

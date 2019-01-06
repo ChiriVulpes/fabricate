@@ -1,7 +1,7 @@
 
 declare module "artisan-worktables/recipe" {
 	import { IItemHandler, IItemHandlerModifiable, IFluidHandler } from "recipe";
-	import { BlockPos } from "math";
+	import { IBlockPos } from "math";
 	import { Type, Tier } from "artisan-worktables/reference";
 
 	export interface ICraftingContext {
@@ -15,6 +15,6 @@ declare module "artisan-worktables/recipe" {
 		getToolReplacementHandler (): IItemHandler | null;
 		getType (): Type;
 		getTier (): Tier;
-		getPosition (): BlockPos;
+		getPosition (): IBlockPos;
 	}
 }

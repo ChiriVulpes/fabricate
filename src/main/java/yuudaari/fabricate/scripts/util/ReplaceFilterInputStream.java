@@ -378,6 +378,8 @@ public class ReplaceFilterInputStream extends FilterInputStream {
 						continue;
 					case NOT_ENOUGH_DATA:
 						continueIteration = false;
+					default:
+						break;
 				}
 				processed = true;
 				break;

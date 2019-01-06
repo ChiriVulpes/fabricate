@@ -18,6 +18,7 @@ import yuudaari.fabricate.api.RegistryEvent;
 import yuudaari.fabricate.recipe.RecipeRegistry;
 import yuudaari.fabricate.scripts.DefinitionManager;
 import yuudaari.fabricate.scripts.ScriptManager;
+import yuudaari.fabricate.wrappers.recipe.Recipe;
 
 @Mod(modid = Fabricate.MODID, name = Fabricate.NAME, version = "@VERSION@", acceptedMinecraftVersions = "[1.12.2]")
 @Mod.EventBusSubscriber
@@ -91,8 +92,8 @@ public class Fabricate implements IApiWrapper {
 		INSTANCE.triggerEvent(RegistryEvent.Recipes.name(), new RecipeRegistry(event.getRegistry()));
 
 		final IForgeRegistryModifiable<IRecipe> REGISTRY = (IForgeRegistryModifiable<IRecipe>) event.getRegistry();
-		for (final IRecipe recipe : REGISTRY.getValues()) {
-			INSTANCE.triggerEvent(RegistryEvent.RegisteredRecipe.name(), recipe);
+		for (final IRecipe recipe : new ArrayList<>(REGISTRY.getValuesCollection())) {
+			INSTANCE.triggerEvent(RegistryEvent.RegisteredRecipe.name(), new Recipe(recipe));
 		}
 	}
 }

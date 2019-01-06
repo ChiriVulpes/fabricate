@@ -1,32 +1,30 @@
 declare module "math" {
 
-	export class Vec3d {
+	export class InternalVec3d { }
+
+	export class Vec3d extends InternalVec3d {
 		static readonly ZERO: Vec3d;
-		static fromPitchYaw (pitch: double, yaw: double): Vec3d;
-		static fromPitchYawVector (vec: Vec2f): Vec3d;
-		x: double;
-		y: double;
-		z: double;
+		static readonly ONE: Vec3d;
+		static readonly UNIT_X: Vec3d;
+		static readonly UNIT_Y: Vec3d;
+		static readonly UNIT_Z: Vec3d;
 		constructor(x: double, y: double, z: double);
-		constructor(vec3i: Vec3i);
-		addVector (x: double, y: double, z: double): Vec3d;
-		add (vec: Vec3d): Vec3d;
-		subtract (x: double, y: double, z: double): Vec3d;
-		subtract (vec: Vec3d): Vec3d;
-		subtractReverse (vec: Vec3d): Vec3d;
-		normalize (): Vec3d;
-		dotProduct (vec: Vec3d): double;
-		crossProduct (vec: Vec3d): Vec3d;
-		distanceTo (vec: Vec3d): double;
-		squareDistanceTo (vec: Vec3d): double;
-		squareDistanceTo (x: double, y: double, z: double): double;
-		scale (factor: double): Vec3d;
-		lengthVector (): double;
-		lengthSquared (): double;
-		getIntermediateWithXValue (vec: Vec3d, x: double): Vec3d | null;
-		getIntermediateWithYValue (vec: Vec3d, x: double): Vec3d | null;
-		getIntermediateWithZValue (vec: Vec3d, x: double): Vec3d | null;
-		rotatePitch (pitch: double): Vec3d;
-		rotateYaw (yaw: double): Vec3d;
+		constructor(vec: Vec3i | Vec3d);
+		x (): double;
+		y (): double;
+		z (): double;
+		getNormalized (): Vec3d;
+		plus (vec: InternalVec3i | InternalVec3d): Vec3d;
+		plus (x: double, y: double, z: double): Vec3d;
+		minus (vec: InternalVec3d | InternalVec3i): Vec3d;
+		minus (x: double, y: double, z: double): Vec3d;
+		getDistanceTo (x: int, y: int, z: int): double;
+		getSquareDistanceTo (vec: InternalVec3i): double;
+		getSquareDistanceTo (x: double, y: double, z: double): double;
+		getLength (): double;
+		getSquareLength (): double;
+		getRotatedByPitch (pitch: float): Vec3d;
+		getRotatedByYaw (yaw: float): Vec3d;
+		getScaled (factor: double): Vec3d;
 	}
 }

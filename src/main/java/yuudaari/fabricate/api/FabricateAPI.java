@@ -5,10 +5,11 @@ import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import yuudaari.fabricate.recipe.Ingredient;
+import net.minecraftforge.oredict.OreDictionary;
+import yuudaari.fabricate.wrappers.recipe.Ingredient;
+import yuudaari.fabricate.wrappers.recipe.ItemStack;
 
 public class FabricateAPI {
 
@@ -40,7 +41,7 @@ public class FabricateAPI {
 		final Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(result.group(1)));
 
 		final String metaGroup = result.group(2);
-		final int meta = metaGroup == null || metaGroup.equals("*") ? 32767 : Integer.parseInt(metaGroup);
+		final int meta = metaGroup == null || metaGroup.equals("*") ? OreDictionary.WILDCARD_VALUE : Integer.parseInt(metaGroup);
 
 		// Llog.info(item.getRegistryName(), count, meta);
 
@@ -48,6 +49,6 @@ public class FabricateAPI {
 	}
 
 	public Ingredient ingredient (final Object... inputs) {
-		return Ingredient.create(inputs);
+		return new Ingredient(inputs);
 	}
 }

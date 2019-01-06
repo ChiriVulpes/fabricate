@@ -1,22 +1,22 @@
 declare module "math" {
 	import { Random } from "random";
 
+	export class IFacing { }
+
 	export interface Facing extends Enum {
-		getName2 (): string;
-		getIndex (): number;
-		getHorizontalIndex (): number;
+		getFacing (): IFacing;
 		getAxis (): Axis;
 		getAxisDirection (): AxisDirection;
-		getOpposite (): Facing;
-		rotateAround (axis: Axis): Facing;
+		opposite (): Facing;
+		rotateAround (axis: Axis | IAxis): Facing;
 		rotateY (): Facing;
+		rotateYCCW (): Facing;
 		rotateX (): Facing;
 		rotateZ (): Facing;
-		rotateYCCW (): Facing;
-		getFrontOffsetX (): number;
-		getFrontOffsetY (): number;
-		getFrontOffsetZ (): number;
-		getHorizontalAngle (): number;
+		getFrontOffsetX (): int;
+		getFrontOffsetY (): int;
+		getFrontOffsetZ (): int;
+		getHorizontalAngle (): float;
 		getDirectionVec (): Vec3i;
 	}
 
@@ -27,19 +27,14 @@ declare module "math" {
 		export const SOUTH: Facing;
 		export const WEST: Facing;
 		export const EAST: Facing;
-		export function getDirectionFromEntityLiving (pos: BlockPos, placer: EntityLiving): Facing;
-		export function getFacingFromAxis (direction: AxisDirection, axis: Axis): Facing;
-		export function getFacingFromVector (x: number, y: number, z: number): Facing;
-		export function random (rand: Random): Facing;
-		export function fromAngle (angle: number): Facing;
-		export function getHorizontal (horizontalIndex: number): Facing;
-		export function getFront (index: number): Facing;
-		export function byName (name: "down" | "up" | "north" | "south" | "west" | "east"): Facing;
-		export function byName (name: string | null): Facing | null;
+		export function get (facing: IFacing): Facing;
 	}
 
+
+	export class IAxis { }
+
 	export interface Axis extends Enum {
-		getName2 (): string;
+		getAxis (): IAxis;
 		isVertical (): boolean;
 		isHorizontal (): boolean;
 		getPlane (): Plane;
@@ -49,28 +44,34 @@ declare module "math" {
 		export const X: Axis;
 		export const Y: Axis;
 		export const Z: Axis;
-		export function byName (name: "x" | "y" | "z"): Axis;
-		export function byName (name: string | null): Axis | null;
+		export function get (axis: IAxis): Axis;
 	}
 
+
+	export class IAxisDirection { }
+
 	export interface AxisDirection extends Enum {
+		getAxisDirection (): IAxisDirection;
 		getOffset (): number;
 	}
 
 	export module AxisDirection {
 		export const POSITIVE: AxisDirection;
 		export const NEGATIVE: AxisDirection;
+		export function get (axisDirection: IAxisDirection): AxisDirection;
 	}
 
+
+	export class IPlane { }
+
 	export interface Plane extends Enum {
+		getPlane (): IPlane;
 		facings (): Facing[];
-		iterator (): Iterator<Facing>
-		random (rand: Random): Facing;
 	}
 
 	export module Plane {
 		export const HORIZONTAL: Plane;
 		export const VERTICAL: Plane;
+		export function get (plane: IPlane): Plane;
 	}
-
 }

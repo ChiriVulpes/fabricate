@@ -1,6 +1,6 @@
 declare module "artisan-worktables/recipe" {
 	import { IRequirement } from "artisan-worktables/recipe/requirement";
-	import { ResourceLocation } from "utility";
+	import { IResourceLocation } from "utility";
 	import { Map, List } from "collections";
 	import { OutputWeightPair, IArtisanIngredient } from "artisan-worktables/recipe";
 	import { FluidStack } from "recipe";
@@ -8,7 +8,7 @@ declare module "artisan-worktables/recipe" {
 	export interface IRecipeFactory {
 		create (
 			name: string | null,
-			requirementMap: Map<ResourceLocation, IRequirement>,
+			requirementMap: Map<IResourceLocation, IRequirement>,
 			output: List<OutputWeightPair>,
 			tools: ToolEntry[],
 			ingredients: List<IArtisanIngredient>,

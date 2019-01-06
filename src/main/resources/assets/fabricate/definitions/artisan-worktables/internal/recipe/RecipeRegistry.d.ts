@@ -1,7 +1,7 @@
 declare module "artisan-worktables/recipe" {
 	import { List, Map } from "collections";
 	import { ItemStack, FluidStack } from "recipe";
-	import { ResourceLocation } from "utility";
+	import { IResourceLocation } from "utility";
 	import { IRequirementContext } from "artisan-worktables/recipe/requirement";
 	import { Tier } from "artisan-worktables/reference";
 
@@ -19,7 +19,7 @@ declare module "artisan-worktables/recipe" {
 			fluidStack: FluidStack | null,
 			secondaryIngredientMatcher: ISecondaryIngredientMatcher,
 			tier: Tier,
-			requirementContextMap: Map<ResourceLocation, IRequirementContext>
+			requirementContextMap: Map<IResourceLocation, IRequirementContext>
 		): IArtisanRecipe | null;
 		containsRecipeWithToolInSlot (tool: ItemStack, toolIndex: number): boolean;
 		containsRecipeWithToolInAnySlot (tool: ItemStack): boolean;

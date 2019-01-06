@@ -2,7 +2,7 @@ package yuudaari.fabricate.api;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
-import net.minecraft.item.crafting.IRecipe;
+import yuudaari.fabricate.wrappers.recipe.Recipe;
 
 public interface IRecipeQuery {
 
@@ -16,19 +16,34 @@ public interface IRecipeQuery {
 	public IRecipeQuery setImmediate ();
 
 	/**
+	 * Filter all recipes with the given output
+	 */
+	public IRecipeQuery filterByOutput (Object result);
+
+	/**
+	 * Filter all recipes with the given output
+	 */
+	public IRecipeQuery filterByOutput (Object result, Integer count);
+
+	/**
+	 * Filter all recipes by name
+	 */
+	public IRecipeQuery filterByName (String name);
+
+	/**
 	 * Filter the query
 	 */
-	public IRecipeQuery filter (Function<IRecipe, Boolean> predicate);
+	public IRecipeQuery filter (Function<Recipe, Boolean> predicate);
 
 	/**
 	 * Call a handler for all recipes that match the filters. Return `true` to continue, and `false` to break.
 	 */
-	public void forEach (Function<IRecipe, Boolean> consumer);
+	public void forEach (Function<Recipe, Boolean> consumer);
 
 	/**
 	 * Call a handler for the first recipe that matches the filters
 	 */
-	public void forFirst (Consumer<IRecipe> consumer);
+	public void forFirst (Consumer<Recipe> consumer);
 
 	/**
 	 * Remove all recipes that match the filters
@@ -43,10 +58,10 @@ public interface IRecipeQuery {
 	/**
 	 * Replaces all recipes that match the filters
 	 */
-	public void replaceAll (Function<IRecipe, IRecipe> handler);
+	public void replaceAll (Function<Recipe, Object> handler);
 
 	/**
 	 * Replaces the first recipe that matches the filters
 	 */
-	public void replaceFirst (Function<IRecipe, IRecipe> handler);
+	public void replaceFirst (Function<Recipe, Object> handler);
 }

@@ -3,7 +3,7 @@ declare module "artisan-worktables/recipe" {
 	import { Random } from "random";
 	import { FluidStack, ItemStack } from "recipe";
 	import { List, Map } from "collections";
-	import { ResourceLocation } from "utility";
+	import { IResourceLocation } from "utility";
 	import { Tier } from "artisan-worktables/reference";
 	import { ICraftingContext } from "artisan-worktables/recipe";
 	import { IRequirement, IRequirementContext } from "artisan-worktables/recipe/requirement";
@@ -11,7 +11,7 @@ declare module "artisan-worktables/recipe" {
 	export class ArtisanRecipe implements IArtisanRecipe {
 		constructor(
 			name: string | null,
-			requirementMap: Map<ResourceLocation, IRequirement>,
+			requirementMap: Map<IResourceLocation, IRequirement>,
 			output: List<OutputWeightPair>,
 			tools: ToolEntry[],
 			ingredients: List<IArtisanIngredient>,
@@ -55,14 +55,14 @@ declare module "artisan-worktables/recipe" {
 		isShaped (): boolean;
 		isMirrored (): boolean;
 		getToolCount (): int;
-		getRequirement (resourceLocation: ResourceLocation): IRequirement;
-		getRequirements (): Map<ResourceLocation, IRequirement>;
+		getRequirement (resourceLocation: IResourceLocation): IRequirement;
+		getRequirements (): Map<IResourceLocation, IRequirement>;
 		isHidden (): boolean;
 		isValidTool (tool: ItemStack, toolIndex: int): boolean;
 		hasSufficientToolDurability (tool: ItemStack, toolIndex: int): boolean;
 		selectOutput (context: ICraftingContext, random: Random): IArtisanItemStack;
 		matches (
-			requirementContextMap: Map<ResourceLocation, IRequirementContext>,
+			requirementContextMap: Map<IResourceLocation, IRequirementContext>,
 			playerExperienceTotal: int,
 			playerLevels: int,
 			isPlayerCreative: boolean,
@@ -72,7 +72,7 @@ declare module "artisan-worktables/recipe" {
 			secondaryIngredientMatcher: ISecondaryIngredientMatcher,
 			tier: Tier
 		): boolean;
-		matchesRequirements (requirementContextMap: Map<ResourceLocation, IRequirementContext>): boolean;
+		matchesRequirements (requirementContextMap: Map<IResourceLocation, IRequirementContext>): boolean;
 		matchTier (tier: Tier): boolean;
 		doCraft (context: ICraftingContext): void;
 	}

@@ -35,6 +35,12 @@
 			"group": "build",
 			"command": "tsc --watch --pretty",
 			"problemMatcher": []
+		},
+		{
+			"label": "Debug",
+			"type": "shell",
+			"group": "build",
+			"command": "node ./debug.js"
 		}
 	]
 }

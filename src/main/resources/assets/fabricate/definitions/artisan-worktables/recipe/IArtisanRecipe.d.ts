@@ -2,7 +2,7 @@
 declare module "artisan-worktables/recipe" {
 	import { Random } from "random";
 	import { Map, List } from "collections";
-	import { ResourceLocation } from "utility";
+	import { IResourceLocation } from "utility";
 	import { ItemStack, FluidStack } from "recipe";
 	import { Tier } from "artisan-worktables/reference";
 	import { IRequirementContext, IRequirement } from "artisan-worktables/recipe/requirement";
@@ -29,7 +29,7 @@ declare module "artisan-worktables/recipe" {
 		 * @return true if this recipe matches the given criteria
 		 */
 		matches (
-			requirementContextMap: Map<ResourceLocation, IRequirementContext>,
+			requirementContextMap: Map<IResourceLocation, IRequirementContext>,
 			playerExperienceTotal: int,
 			playerLevels: int,
 			isPlayerCreative: boolean,
@@ -44,18 +44,18 @@ declare module "artisan-worktables/recipe" {
 		 * @param requirementContextMap requirement contexts
 		 * @return true if the recipe's requirements match the given context
 		 */
-		matchesRequirements (requirementContextMap: Map<ResourceLocation, IRequirementContext>): boolean;
+		matchesRequirements (requirementContextMap: Map<IResourceLocation, IRequirementContext>): boolean;
 
 		/**
 		 * @param resourceLocation requirement resource location
 		 * @return the recipe's requirement for the given resource location or null if none exists
 		 */
-		getRequirement (resourceLocation: ResourceLocation): IRequirement | null;
+		getRequirement (resourceLocation: IResourceLocation): IRequirement | null;
 
 		/**
 		 * @return a read-only view of this recipe's requirements
 		 */
-		getRequirements (): Map<ResourceLocation, IRequirement>;
+		getRequirements (): Map<IResourceLocation, IRequirement>;
 
 		/**
 		 * @param tool      the tool to check

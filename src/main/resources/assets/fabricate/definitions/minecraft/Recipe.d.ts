@@ -4,27 +4,6 @@ declare module "recipe" {
 
 	}
 
-	export interface ItemStack {
-		isEmpty (): boolean;
-		splitStack (amount: int): ItemStack;
-		getItem (): Item;
-		getMaxStackSize (): int;
-		isStackable (): boolean;
-		isItemStackDamageable (): boolean;
-		getHasSubtypes (): boolean;
-		isItemDamaged (): boolean;
-		getItemDamage (): int;
-		getMetadata (): int;
-		setItemDamage (meta: int): void;
-		getMaxDamage (): int;
-		copy (): ItemStack;
-		getMaxItemUseDuration (): int;
-	}
-
-	export interface Ingredient {
-
-	}
-
 	export interface FluidStack {
 
 	}

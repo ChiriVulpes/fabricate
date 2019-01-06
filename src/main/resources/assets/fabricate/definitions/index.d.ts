@@ -1,8 +1,3 @@
-declare interface JArray<T> {
-	length: number;
-	[key: number]: T;
-}
-
 declare module Java {
 	export function type (name: string): any;
 	export function to (data: number[], to: "int[]"): int[];
@@ -11,8 +6,8 @@ declare module Java {
 }
 
 declare interface Enum {
-	getName (): string;
-	getOrdinal (): number;
+	name (): string;
+	ordinal (): number;
 }
 
 /**

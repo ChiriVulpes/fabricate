@@ -1,5 +1,10 @@
 {
 	"fabricate": "yuudaari.fabricate.api.FabricateAPI",
+	"log": {
+		"exports": {
+			"Log": "yuudaari.fabricate.util.Llog"
+		}
+	},
 	"collections": {
 		"root": "java.util",
 		"exports": {
@@ -10,30 +15,39 @@
 	},
 	"random": "java.util.Random",
 	"utility": {
-		"root": "net.minecraft.util",
+		"root": "yuudaari.fabricate.wrappers.util",
 		"exports": {
 			"ResourceLocation": "ResourceLocation"
 		}		
 	},
 	"math": {
-		"root": "net.minecraft.util",
+		"root": "yuudaari.fabricate.wrappers.math",
 		"exports": {
-			"BlockPos": "math.BlockPos",
-			"Vec2f": "math.Vec2f",
-			"Vec3i": "math.Vec3i",
-			"Vec3d": "math.Ved3d",
-			"Facing": "EnumFacing",
-			"Axis": "EnumFacing$Axis",
-			"AxisDirection": "EnumFacing$AxisDirection",
-			"Plane": "EnumFacing$Plane",
+			"BlockPos": "BlockPos",
+			"Vec2f": "Vec2f",
+			"Vec3i": "Vec3i",
+			"Vec3d": "Vec3d",
+			"Facing": "Facing",
+			"Axis": "Axis",
+			"AxisDirection": "AxisDirection",
+			"Plane": "Plane",
 			"Rotation": "Rotation"
+		}
+	},
+	"recipe": {
+		"root": "yuudaari.fabricate",
+		"exports": {
+			"ItemStack": "wrappers.recipe.ItemStack",
+			"Ingredient": "wrappers.recipe.Ingredient",
+			"Item": "wrappers.recipe.Item",
+			"RecipeType": "recipe.RecipeBuilder$RecipeType"
 		}
 	},
 	"artisan-worktables": {
 		"root": "com.codetaylor.mc.artisanworktables.api",
 		"exports": {
 			"ArtisanAPI": "ArtisanAPI",
-			"RecipeBuilder": "recipe.RecipeBuilder"
+			"ArtisanBuilder": "recipe.RecipeBuilder"
 		}
 	},
 	"artisan-worktables/reference": {

@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import org.apache.commons.io.IOUtils;
 import yuudaari.fabricate.scripts.DefinitionManager.Module;
 import yuudaari.fabricate.scripts.util.FileVisitor;
 import yuudaari.fabricate.scripts.util.TransformStream;
@@ -43,10 +44,24 @@ public class ScriptManager {
 	public void onScriptFile (final Path path) throws FileNotFoundException {
 		final Reader scriptReader = getScriptReader(path);
 
+		boolean errored = false;
 		try {
 			engine.eval(scriptReader);
 		} catch (final ScriptException e) {
 			Llog.err(e);
+			errored = true;
+		}
+
+		if (errored) {
+			// for viewing the output. note: prevents the script reader from working
+			Llog.info(path.toFile().getAbsolutePath());
+
+			try {
+				String result = IOUtils.toString(scriptReader);
+				Llog.info(result);
+			} catch (IOException e) {
+				Llog.info(e);
+			}
 		}
 	}
 
@@ -62,19 +77,6 @@ public class ScriptManager {
 		}
 
 		final TransformStream stream = streamFactory.create();
-
-		/*
-		// for viewing the output. note: prevents the script reader from working
-		Llog.info(path.toFile().getAbsolutePath());
-		
-		try {
-			String result = IOUtils.toString(stream, StandardCharsets.UTF_8);
-			Llog.info(result);
-		} catch (IOException e) {
-			Llog.info(e);
-		}
-		*/
-
 		return new InputStreamReader(stream);
 	}
 
@@ -89,8 +91,10 @@ public class ScriptManager {
 			replacement.append(export.getKey());
 			replacement.append("\":");
 			replacement.append("Java.type(\"");
-			replacement.append(module.getPath());
-			replacement.append('.');
+			if (module.getPath().length() > 0) {
+				replacement.append(module.getPath());
+				replacement.append('.');
+			}
 			replacement.append(export.getValue());
 			replacement.append("\")");
 			replacement.append(',');
