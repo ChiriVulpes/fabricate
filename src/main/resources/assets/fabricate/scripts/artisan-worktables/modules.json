@@ -1,0 +1,29 @@
+{
+	"artisan-worktables": {
+		"root": "com.codetaylor.mc.artisanworktables.api",
+		"exports": {
+			"ArtisanAPI": "ArtisanAPI",
+			"ArtisanBuilder": "wrapper:RecipeBuilder"
+		}
+	},
+	"artisan-worktables/reference": {
+		"root": "com.codetaylor.mc.artisanworktables.api.internal.reference",
+		"exports": {
+			"Type": "EnumType",
+			"Tier": "EnumTier",
+			"GameStageRequire": "EnumGameStageRequire"
+		}
+	},
+	"artisan-worktables/recipe": {
+		"root": "com.codetaylor.mc.artisanworktables.api",
+		"exports": {
+			"RecipeRegistry": "internal.recipe.RecipeRegistry",
+			"ToolEntry": "internal.recipe.ToolEntry",
+			"ToolIngredientEntry": "internal.recipe.ToolIngredientEntry",
+			"OutputWeightPair": "internal.recipe.OutputWeightPair",
+			"IRecipeMatrixMatcher": "internal.recipe.IRecipeMatrixMatcher",
+			"ISecondaryIngredientMatcher": "internal.recipe.ISecondaryIngredientMatcher",
+			"IRecipeFactory": "recipe.IRecipeFactory"
+		}
+	}
+}

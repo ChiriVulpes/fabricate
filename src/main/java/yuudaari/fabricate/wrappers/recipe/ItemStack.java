@@ -34,6 +34,11 @@ public class ItemStack {
 		return this.stack.getCount();
 	}
 
+	public ItemStack setCount (final int newCount) {
+		this.stack.setCount(newCount);
+		return this;
+	}
+
 	public int getMetadata () {
 		return this.stack.getMetadata();
 	}

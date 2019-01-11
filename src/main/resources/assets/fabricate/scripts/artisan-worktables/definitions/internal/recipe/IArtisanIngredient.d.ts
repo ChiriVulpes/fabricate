@@ -3,7 +3,7 @@ declare module "artisan-worktables/recipe" {
 
 	export interface IArtisanIngredient {
 		isEmpty (): boolean;
-		getAmount (): boolean;
+		getAmount (): int;
 		matches (stack: IArtisanItemStack): boolean;
 		matches (stack: IArtisanItemStack): boolean;
 		matchesIgnoreAmount (stack: ItemStack): boolean;

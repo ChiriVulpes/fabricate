@@ -1,13 +1,7 @@
 package yuudaari.fabricate.api;
 
 import java.util.function.Consumer;
-import java.util.regex.MatchResult;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.oredict.OreDictionary;
+import yuudaari.fabricate.recipe.IngredientHelper;
 import yuudaari.fabricate.wrappers.recipe.Ingredient;
 import yuudaari.fabricate.wrappers.recipe.ItemStack;
 
@@ -26,26 +20,12 @@ public class FabricateAPI {
 		wrapper.addEventHandler(event, handler);
 	}
 
-	private static final Pattern STACK_PATTERN = Pattern.compile("([a-z]+:[a-zA-Z0-9/_-]+)(?:[@:]([0-9]+))?");
-
-	public ItemStack stack (final String name) {
-		return stack(name, 1);
+	public ItemStack stack (final Object input) {
+		return stack(input, 1);
 	}
 
-	public ItemStack stack (final String name, final int count) {
-		final Matcher matcher = STACK_PATTERN.matcher(name);
-		if (!matcher.matches()) return ItemStack.EMPTY;
-
-		final MatchResult result = matcher.toMatchResult();
-
-		final Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(result.group(1)));
-
-		final String metaGroup = result.group(2);
-		final int meta = metaGroup == null || metaGroup.equals("*") ? OreDictionary.WILDCARD_VALUE : Integer.parseInt(metaGroup);
-
-		// Llog.info(item.getRegistryName(), count, meta);
-
-		return new ItemStack(item, count, meta);
+	public ItemStack stack (final Object input, final int count) {
+		return IngredientHelper.getStacks(input).get(0).setCount(count);
 	}
 
 	public Ingredient ingredient (final Object... inputs) {

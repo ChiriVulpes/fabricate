@@ -1,5 +1,6 @@
 declare module Java {
 	export function type (name: string): any;
+	export function type<T> (name: string): T;
 	export function to (data: number[], to: "int[]"): int[];
 	export function to (data: number[], to: "float[]"): float[];
 	export function to<T> (data: T[], to: string): T[];

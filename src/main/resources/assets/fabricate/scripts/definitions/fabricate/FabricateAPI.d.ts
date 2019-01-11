@@ -1,14 +1,14 @@
 declare module "fabricate" {
 	import { ResourceLocation } from "utility";
-	import { ItemStack, Recipe, IItemStack, Ingredient } from "recipe";
+	import { ItemStack, Recipe, IItemStack, Ingredient, IIngredient } from "recipe";
 
 	export const enum RegistryEvent {
 		Recipes = "Recipes",
 		RegisteredRecipe = "RegisteredRecipe",
 	}
 
-	export type ParseableIngredientOutput = string | IItemStack;
-	export type ParseableIngredientInput = ParseableIngredientOutput | ParseableIngredientOutput[] | null;
+	export type ParseableIngredientOutput = string | IItemStack | ItemStack;
+	export type ParseableIngredientInput = ParseableIngredientOutput | ParseableIngredientOutput[] | IIngredient | Ingredient | null;
 
 	export module Fabricate {
 		/**
@@ -21,14 +21,17 @@ declare module "fabricate" {
 		export function on (event: RegistryEvent.RegisteredRecipe, handler: (recipe: Recipe) => void): void;
 
 		/**
-		 * Gets a stack from a string. Used internally when passing strings to Fabricate methods.
+		 * Creates a stack.
 		 */
-		export function stack (stack: string): ItemStack;
+		export function stack (stack: ParseableIngredientOutput): ItemStack;
 		/**
-		 * Gets a stack from a string. Used internally when passing strings to Fabricate methods.
+		 * Creates a stack.
 		 */
-		export function stack (stack: string, count: number): ItemStack;
+		export function stack (stack: ParseableIngredientOutput, count: number): ItemStack;
 
+		/**
+		 * Creates an ingredient.
+		 */
 		export function ingredient (...ingredients: ParseableIngredientInput[]): Ingredient;
 	}
 }

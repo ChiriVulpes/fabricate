@@ -3,7 +3,8 @@
 		"strict": true,
 		"outDir": "./out",
 		"noLib": true,
-		"baseUrl": "./"
+		"baseUrl": "./",
+		"target": "es5"
 	},
 	"include": [
 		"**/*.ts",

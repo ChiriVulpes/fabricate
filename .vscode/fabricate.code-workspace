@@ -10,6 +10,7 @@
 	"settings": {
 		"java.configuration.updateBuildConfiguration": "automatic",
 		"java.format.settings.url": "../.settings/format.xml",
-		"java.format.settings.profile": "GoogleStyle"
+		"java.format.settings.profile": "GoogleStyle",
+		"workbench.tree.horizontalScrolling": true
 	}
 }
